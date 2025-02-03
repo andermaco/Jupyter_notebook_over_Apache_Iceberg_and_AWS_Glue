@@ -4,6 +4,7 @@ deploy/jar_libraries/*.jar
 
 # Jupyiter Notebooks
 .ipynb_checkpoints
+.ipynb_checkpoints/*
 */.ipynb_checkpoints/*
 
 # IPython
