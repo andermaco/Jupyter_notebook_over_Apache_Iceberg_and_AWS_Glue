@@ -29,6 +29,12 @@ aws_access_key_id=YOUR_ACCESS_KEY_ID
 aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 ```
 
+## Download required libraries
+Requerired libraries has not been uploaded to repository, dowload them using:
+```commandline
+cd deploy/jar_libraries/
+bash download_libs.sh
+```
 
 ## Pull AWS Glue Docker image
 Docker pull a pre-configured environment with Spark and necessary libraries. Nevertheless, addtional libraries at deploy/jar_libraries will be added later on.
