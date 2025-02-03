@@ -59,7 +59,8 @@ Jupyter Notebook will be created
 ```commandline
 Enter at http://127.0.0.1:8888/lab
 ```
-
+<br/>
+---
 ## Start a new terminal session
 At the botton left, click on Terminal
 
@@ -73,9 +74,11 @@ cd jupyter_workspace/
 bash configure_iceberg_glue.sh
 ```
 <br/>
-<br/>
 
-Here in after, at Jupyter Notebook, doble click over [sample_spark_preprocesing.ipynb](sample_spark_preprocesing.ipynb) jupyter notebook, it's self descriptive.
+***Here in after, at Jupyter Notebook, open [sample_spark_preprocesing.ipynb](sample_spark_preprocesing.ipynb) jupyter notebook, exece all cells, it's self descriptive.***
+
+<br/>
+<br/>
 
 
 
