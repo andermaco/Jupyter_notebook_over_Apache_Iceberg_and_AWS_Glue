@@ -35,3 +35,6 @@ ipython_config.py
 .Trash-10000/files/readme.MD
 .Trash-10000/files/iceberg-spark-runtime-3.5_2.12-1.7.1.jar
 .Trash-10000/files/bundle-2.17.161.jar
+.ipynb_checkpoints/configure_iceberg_glue-checkpoint.sh
+.ipynb_checkpoints/sample_spark_preprocesing-checkpoint.ipynb
+.ipynb_checkpoints/sample_spark_preprocesing-checkpoint.ipynb
