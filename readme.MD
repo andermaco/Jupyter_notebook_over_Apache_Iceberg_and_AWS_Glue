@@ -32,9 +32,9 @@ aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 ## Download required libraries
 Requerired libraries has not been uploaded to repository, dowload them using:
 ```commandline
-cd deploy/jar_libraries/
 bash download_libs.sh
 ```
+Jar libraries will be downloaded to ./deplo/jar_libraries
 
 ## Pull AWS Glue Docker image
 Docker pull a pre-configured environment with Spark and necessary libraries. Nevertheless, addtional libraries at deploy/jar_libraries will be added later on.
@@ -51,7 +51,7 @@ The docker image contains all needed for setting the Jupyter Notebook environmen
 - BUCKET_NAME: S3 bucket where datawarehouse will be stored in the following way **warehouse/database/table/[data|metadata]** for better organization
 
 ```commandline
-docker run -it --rm -v ~/.aws:/home/glue_user/.aws -v `pwd`:/home/glue_user/workspace/jupyter_workspace/  -e AWS_PROFILE=bd_user_tq -e AWS_REGION=eu-west-1 -e DISABLE_SSL=true -e DB_NAME=database_name -e TB_NAME=table_name -e BUCKET_NAME=bd-datawarehouse  -p 4050:4040 -p 18050:18080 -p 8950:8998 -p 8888:8888 --name glue_pyspark_dev amazon/aws-glue-libs:glue_libs_4.0.0_image_01 /home/glue_user/jupyter/jupyter_start.sh
+docker run -it --rm -v ~/.aws:/home/glue_user/.aws -v `pwd`:/home/glue_user/workspace/jupyter_workspace/  -e AWS_PROFILE=bd_user_tq -e AWS_REGION=eu-west-1 -e DISABLE_SSL=true -e DB_NAME=database_name -e TB_NAME=table_name -e BUCKET_NAME=bd-datawarehouse -e WORKGROUP=bd_test_tq_wg -p 4050:4040 -p 18050:18080 -p 8950:8998 -p 8888:8888 --name glue_pyspark_dev amazon/aws-glue-libs:glue_libs_4.0.0_image_01 /home/glue_user/jupyter/jupyter_start.sh
 ```
 Jupyter Notebook will be created
 
@@ -71,7 +71,7 @@ Once terminal is available exec the following in order to configure aditional li
 
 ```commandline
 cd jupyter_workspace/
-bash configure_iceberg_glue.sh
+bash configure_env.sh
 ```
 <br/>
 
