@@ -32,7 +32,7 @@ aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 ## Download required libraries
 Requerired libraries has not been uploaded to repository, dowload them using:
 ```commandline
-bash download_libs.sh
+bash sh/download_libs.sh
 ```
 Jar libraries will be downloaded to ./deplo/jar_libraries
 
@@ -51,7 +51,7 @@ The docker image contains all needed for setting the Jupyter Notebook environmen
 - BUCKET_NAME: S3 bucket where datawarehouse will be stored in the following way **warehouse/database/table/[data|metadata]** for better organization
 
 ```commandline
-docker run -it --rm -v ~/.aws:/home/glue_user/.aws -v `pwd`:/home/glue_user/workspace/jupyter_workspace/  -e AWS_PROFILE=bd_user_tq -e AWS_REGION=eu-west-1 -e DISABLE_SSL=true -e DB_NAME=database_name -e TB_NAME=table_name -e BUCKET_NAME=bd-datawarehouse -e WORKGROUP=bd_test_tq_wg -p 4050:4040 -p 18050:18080 -p 8950:8998 -p 8888:8888 --name glue_pyspark_dev amazon/aws-glue-libs:glue_libs_4.0.0_image_01 /home/glue_user/jupyter/jupyter_start.sh
+docker run -it --rm -w /home/glue_user/workspace/jupyter_workspace -v ~/.aws:/home/glue_user/.aws -v `pwd`:/home/glue_user/workspace/jupyter_workspace/  -e AWS_PROFILE=bd_user_tq -e AWS_REGION=eu-west-1 -e DISABLE_SSL=true -e DB_NAME=database_name -e TB_NAME=table_name -e BUCKET_NAME=bd-datawarehouse -e WORKGROUP=bd_test_tq_wg -p 4050:4040 -p 18050:18080 -p 8950:8998 -p 8888:8888 --name glue_pyspark_dev amazon/aws-glue-libs:glue_libs_4.0.0_image_01 /home/glue_user/jupyter/jupyter_start.sh
 ```
 Jupyter Notebook will be created
 
@@ -60,14 +60,13 @@ Jupyter Notebook will be created
 Enter at http://127.0.0.1:8888/lab
 ```
 <br/>
----
-## Start a new terminal session
-At the botton left, click on Terminal
 
-![alt text](image.png)
+
+## Start a new "Terminal" session
+At the botton left, click on "Terminal"
 
 <br/>
-Once terminal is available exec the following in order to configure aditional libraries and settings:
+Once new Terminal is available exec the following in order to configure aditional libraries and settings:
 
 ```commandline
 cd jupyter_workspace/
