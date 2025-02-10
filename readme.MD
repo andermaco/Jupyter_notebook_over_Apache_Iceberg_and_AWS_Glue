@@ -91,7 +91,7 @@ The docker image contains all needed for setting the Jupyter Notebook environmen
 - BUCKET_NAME: S3 bucket where datawarehouse will be stored in the following way **warehouse/database/table/[data|metadata]** for better organization
 
 ```sh
-docker run -it --rm -w /home/glue_user/workspace/jupyter_workspace -v ~/.aws:/home/glue_user/.aws -v `pwd`:/home/glue_user/workspace/jupyter_workspace/  -e AWS_PROFILE=bd_user_tq -e AWS_REGION=eu-west-1 -e DISABLE_SSL=true -e DB_NAME=database_name -e TB_NAME=table_name -e BUCKET_NAME=bd-datawarehouse -e WORKGROUP=bd_test_tq_wg -p 4050:4040 -p 18050:18080 -p 8950:8998 -p 8888:8888 --name glue_pyspark_dev amazon/aws-glue-libs:glue_libs_4.0.0_image_01 /home/glue_user/jupyter/jupyter_start.sh
+docker run -it --rm -w /home/glue_user/workspace/jupyter_workspace -v ~/.aws:/home/glue_user/.aws -v `pwd`:/home/glue_user/workspace/jupyter_workspace/  -e AWS_PROFILE=bd_user_tq -e AWS_ROLE=arn:aws:iam::216989113396:role/role_glue_tq -e AWS_REGION=eu-west-1 -e DISABLE_SSL=true -e DB_NAME=database_name -e TB_NAME=table_name -e BUCKET_NAME=bd-datawarehouse -e WORKGROUP=bd_test_tq_wg -p 4050:4040 -p 18050:18080 -p 8950:8998 -p 8888:8888 --name glue_pyspark_dev amazon/aws-glue-libs:glue_libs_4.0.0_image_01 /home/glue_user/jupyter/jupyter_start.sh
 ```
 Jupyter Notebook will be created
 
@@ -182,7 +182,7 @@ The actual Parquet files are stored inside these partitions.
 ## How Iceberg Handles Queries on This Partitioned Table
 When you run a query like:
 ```sql
-SELECT * FROM {database_name}.{table_name} WHERE created_at >= '2025-02-01' AND created_at < '2025-03-01';
+SELECT * FROM database_name.table_name WHERE created_at >= '2025-02-01' AND created_at < '2025-03-01';
 ```
 Iceberg prunes partitions and only reads the files under created_at_month=2025-02/ instead of scanning the entire dataset.
 This improves performance significantly compared to traditional partitioning systems like Hive.
@@ -196,6 +196,48 @@ WHERE created_at >= date('2025-01-01') and created_at <= date('2025-02-02');
 
 You can get more info about table properties here: https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-creating-tables.html
 
+
+## Athena & Iceberg Time Travel and Snapshots capability
+There are several posibilities to time travel over our data in Athena-Iceberg
+
+#### Time Travel 
+##### Query data at a specific point in time
+Use the sentence **FOR TIMESTAMP AS OF** to query to an specific timestamp.
+```sql
+SELECT * FROM database_name.table_name FOR TIMESTAMP AS OF TIMESTAMP '2025-02-09 19:50:31.005000 UTC'
+```
+
+##### Restore a table to a specific point in time using CTAS
+```sql
+CREATE TABLE restored_table_name AS
+SELECT *
+FROM table_name
+FOR TIMESTAMP AS OF TIMESTAMP '2025-02-09 19:50:31.005 UTC'
+```
+<br/>
+
+
+
+#### Snapshots
+##### List Snapshots for a Table
+In order to view the available snapshots (committed_at and snapshot_id fields) for an Iceberg table, query the $snapshots metadata table
+```sql
+SELECT * FROM database_name."table_name$snapshots"
+```
+
+##### Query data at a Specific Snapshot ID
+Use the sentence **FOR VERSION AS OF** to query to an specific snapshot id
+```sql
+SELECT * FROM database_name.table_name FOR VERSION AS OF 6132392547015257590
+```
+
+##### Create a view from a specific snapshot ID
+```sql
+CREATE OR REPLACE VIEW time_travel_view AS
+SELECT *
+FROM database_name.table_name
+FOR VERSION AS OF 6132392547015257590;
+```
 
 <br/>
 # License
