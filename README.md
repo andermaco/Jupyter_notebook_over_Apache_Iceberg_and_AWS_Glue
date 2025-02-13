@@ -1,7 +1,7 @@
 # Jupyter notebook over Apache Iceberg and AWS Glue
 
 ## Intro
-Just a sample project for Building AWS Glue jobs at Jupyter Notebooks using PySpark, Iceberg table, and AWS Glue Catalog.
+Just a sample project showing samples regading Iceberg table format interactions for Building AWS Glue jobs at Jupyter Notebooks using PySpark, Iceberg table, and AWS Glue Catalog.
 
 Main characteristics:
 
