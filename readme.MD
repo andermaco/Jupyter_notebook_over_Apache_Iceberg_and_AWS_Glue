@@ -1,5 +1,6 @@
+# Jupyter notebook over Apache Iceberg and AWS_Glue
 
-# Intro
+## Intro
 Just a sample project for interact using a Jupyter Notebook with PySpark, Iceberg table, all over AWS Glue Catalog.  
 
 Main characteristics:
