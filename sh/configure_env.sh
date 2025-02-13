@@ -1,8 +1,10 @@
 # Update pip
 pip install --upgrade pip
 
-# Install wrangler
+# Install numpy
 pip install numpy==1.26.4
+
+# Install wrangler
 pip install awswrangler
 
 # Configure spark
